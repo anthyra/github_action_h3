@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  nginx:
+    container_name: exo_devops_nginx
+    build: docker/nginx
+    volumes:
+      - ./app/:/var/www/html/
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/sites/:/etc/nginx/sites-available
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d
+      - ./docker/logs:/var/log
+    depends_on:
+      - php-fpm
+    ports:
+      - "80:80"
+    networks:
+      - exo_devops_network
+
+  php-fpm:
+    container_name: exo_devops_php
+    build: docker/php-fpm
+    volumes:
+      - ./app/:/var/www/html/
+      - ./docker/php-fpm/custom.ini:/usr/local/etc/php/conf.d/custom.ini:ro
+    networks:
+      - exo_devops_network
+
+networks:
+  exo_devops_network:
+    driver: bridge
