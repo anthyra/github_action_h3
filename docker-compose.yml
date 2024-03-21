@@ -9,7 +9,5 @@ services:
       - ./docker/nginx/sites/:/etc/nginx/sites-available
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d
       - ./docker/logs:/var/log
-    depends_on:
-      - php-fpm
     ports:
       - "80:80"
