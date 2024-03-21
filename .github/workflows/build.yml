@@ -22,12 +22,6 @@ jobs:
       - name: Build Docker image
         run: docker-compose build
 
-      - name: Log into Docker Hub
-        run: echo ${{ secrets.TEST_TOKEN }} | docker login -u ${{ secrets.TEST_MAIL }} --password-stdin
-
-      - name: Push Docker image to Docker Hub
-        run: |
-          IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)
-          docker tag exo_devops_nginx anthyra/test_h3_action:nginx_$IMAGE_TAG
-          docker push anthyra/test_h3_action/nginx_$IMAGE_TAG
+      - name: see if image exists
+        run: docker images
 
