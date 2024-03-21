@@ -20,13 +20,13 @@ jobs:
         run: docker-compose build
 
       - name: Log into Docker Hub
-        run: echo "{{ secret.TEST_TOKEN }}" | docker login -u "{{ secret.TEST_NAME }}" --password-stdin
+        run: echo "{{ secrets.TEST_TOKEN }}" | docker login -u "{{ secrets.TEST_NAME }}" --password-stdin
 
       - name: Push Docker image to Docker Hub
         run: |
           IMAGE_TAG=$(echo $GITHUB_SHA | head -c7)
           docker tag exo_devops_nginx:latest anthyra/test_h3_action:nginx_$IMAGE_TAG
-          docker push $DOCKER_HUB_USERNAME/your_repository_name:nginx_$IMAGE_TAG
+          docker push anthyra/your_repository_name:nginx_$IMAGE_TAG
           
           docker tag exo_devops_php:latest anthyra/test_h3_action:php_$IMAGE_TAG
           docker push $DOCKER_HUB_USERNAME/your_repository_name:php_$IMAGE_TAG
