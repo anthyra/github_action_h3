@@ -13,14 +13,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Test echo
+        run: echo ${{ secrets.TEST_NAME }}
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
       - name: Build Docker image
         run: docker-compose build
-
-      - name: Test echo
-        run: echo {{ secrets.TEST_NAME }}
 
       - name: Log into Docker Hub
         run: echo "{{ secrets.TEST_TOKEN }}" | docker login -u "{{ secrets.TEST_NAME }}" --password-stdin
